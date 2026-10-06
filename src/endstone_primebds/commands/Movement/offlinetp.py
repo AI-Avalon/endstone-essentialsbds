@@ -1,9 +1,12 @@
 from endstone import Player
 from endstone.command import CommandSender
 from endstone_primebds.utils.command_util import create_command
-from endstone.level import Location
+from endstone import level
 
 from typing import TYPE_CHECKING
+
+# Use native exports even when the Python facade packages are unavailable.
+Location = level.Location
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
 

@@ -1,8 +1,11 @@
 from datetime import datetime, timedelta
 from endstone import Player
-from endstone.inventory import ItemStack
+from endstone import inventory
 
 from typing import TYPE_CHECKING
+
+# Use native exports even when the Python facade packages are unavailable.
+ItemStack = inventory.ItemStack
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
 

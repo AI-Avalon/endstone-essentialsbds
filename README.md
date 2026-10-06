@@ -32,6 +32,8 @@
 
 An essentials plugin for diagnostics, stability, and quality of life on Minecraft Bedrock Edition. This release is aligned with Endstone 0.11.9 and Minecraft Bedrock Dedicated Server 1.26.44, and is distributed as a Python wheel for direct installation in an Endstone server.
 
+Version 3.5.4 fixes plugin loading when `endstone.inventory` or `endstone.level` is unavailable by resolving item and location types from Endstone's native exports. The fix covers command discovery, moderation, teleportation, database helpers, and connection handlers.
+
 ## What it does
 
 - Provides a broad essentials suite covering gamemodes, item tools, messaging, moderation, teleport utilities, diagnostics, permissions, and ranks.
@@ -139,14 +141,14 @@ See [commands.md](commands.md) for every hotspot syntax, filters, permissions, o
 | Endstone API | `0.11` |
 | Bedrock Dedicated Server | `1.26.44` |
 | Python | `>=3.10` |
-| Plugin release | `v3.5.3` |
+| Plugin release | `v3.5.4` |
 
 ## Install
 
 Download the wheel from the matching GitHub release:
 
 ```bash
-gh release download v3.5.3 --repo TheNINJALLO/endstone-essentialsbds --pattern "*.whl"
+gh release download v3.5.4 --repo TheNINJALLO/endstone-essentialsbds --pattern "*.whl"
 ```
 
 Copy the downloaded wheel into the server's `plugins/` directory, remove any older wheel for the same plugin, and restart Endstone.

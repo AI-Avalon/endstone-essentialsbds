@@ -6,10 +6,13 @@ except ImportError:
     BlockCommandSender = None 
 from endstone_primebds.utils.command_util import create_command
 from endstone_primebds.handlers.intervals import stop_jail_check_if_not_needed
-from endstone.level import Location
+from endstone import level
 from endstone import GameMode
 
 from typing import TYPE_CHECKING
+
+# Use native exports even when the Python facade packages are unavailable.
+Location = level.Location
 
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials

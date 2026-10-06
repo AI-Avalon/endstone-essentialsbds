@@ -1,5 +1,8 @@
 from pathlib import Path
-import tomllib
+try:
+    import tomllib
+except ModuleNotFoundError:  # Python 3.10
+    import tomli as tomllib
 
 
 def test_endstone_distribution_name_matches_entry_point():
@@ -13,9 +16,9 @@ def test_endstone_distribution_name_matches_entry_point():
     assert project["name"] == f"endstone-{entry_point_name.replace('_', '-')}"
 
 
-def test_release_version_is_3_5_3():
+def test_release_version_is_3_5_4():
     pyproject_path = Path(__file__).parents[1] / "pyproject.toml"
     with pyproject_path.open("rb") as pyproject_file:
         project = tomllib.load(pyproject_file)["project"]
 
-    assert project["version"] == "3.5.3"
+    assert project["version"] == "3.5.4"

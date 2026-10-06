@@ -5,7 +5,7 @@ except ImportError:
     BlockCommandSender = None 
 from endstone_primebds.utils.command_util import create_command
 from endstone import GameMode
-from endstone.inventory import ItemStack
+from endstone import inventory
 
 from endstone_primebds.handlers.intervals import start_jail_check_if_needed
 from endstone_primebds.utils.logging_util import log
@@ -13,6 +13,9 @@ from endstone_primebds.utils.mod_util import format_time_remaining, safe_duratio
 from datetime import timedelta, datetime
 
 from typing import TYPE_CHECKING
+
+# Use native exports even when the Python facade packages are unavailable.
+ItemStack = inventory.ItemStack
 
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials

@@ -1,5 +1,5 @@
 from endstone import GameMode
-from endstone.level import Location
+from endstone import level
 from endstone_primebds.utils.config_util import load_config
 
 from endstone_primebds.utils.intervals_util import IntervalManager
@@ -9,6 +9,9 @@ if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
 
 import threading
+
+# Use native exports even when the Python facade packages are unavailable.
+Location = level.Location
 
 def init_intervals(self: "OnistoneEssentials"):
     """Actual interval setup, safe to run in its own thread."""

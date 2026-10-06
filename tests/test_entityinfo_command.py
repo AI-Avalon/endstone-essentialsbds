@@ -33,6 +33,7 @@ def load_entityinfo_without_block_sender(monkeypatch):
     # Deliberately do not expose BlockCommandSender.
     level_module = types.ModuleType("endstone.level")
     level_module.Location = Location
+    endstone.level = level_module
 
     command_util = types.ModuleType("endstone_primebds.utils.command_util")
 

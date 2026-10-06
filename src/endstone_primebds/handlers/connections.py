@@ -10,9 +10,12 @@ from endstone_primebds.handlers.intervals import start_jail_check_if_needed, sto
 from endstone_primebds.utils.config_util import CONFIG_FOLDER, load_config
 from endstone_primebds.utils.mod_util import format_time_remaining, ban_message
 from endstone_primebds.utils.logging_util import log, discordRelay
-from endstone.inventory import ItemStack
+from endstone import inventory
 
 import endstone_primebds.utils.internal_permissions_util as perms_util
+
+# Use native exports even when the Python facade packages are unavailable.
+ItemStack = inventory.ItemStack
 
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials

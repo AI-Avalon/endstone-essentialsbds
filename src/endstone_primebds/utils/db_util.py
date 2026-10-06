@@ -6,7 +6,7 @@ from dataclasses import dataclass, fields
 import time
 from typing import List, Tuple, Any, Dict, Optional
 from endstone import Player
-from endstone.level import Location
+from endstone import level
 from endstone.util import Vector
 from endstone_primebds.utils.address_util import same_subnet
 from endstone_primebds.utils.mod_util import format_time_remaining
@@ -23,6 +23,9 @@ from endstone_primebds.utils.config_util import (
     find_folder,
 )
 from datetime import datetime
+
+# Use native exports even when the Python facade packages are unavailable.
+Location = level.Location
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 while not (os.path.exists(os.path.join(current_dir, 'plugins')) and os.path.exists(os.path.join(current_dir, 'worlds'))):

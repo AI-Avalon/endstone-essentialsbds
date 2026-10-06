@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING
 from endstone import Player
 from endstone.actor import Item, Mob
 from endstone.command import CommandSender
-from endstone.level import Location
+from endstone import level
 
 try:
     from endstone.command import BlockCommandSender
@@ -27,6 +27,9 @@ from endstone_primebds.utils.entity_hotspots import (
     paginate,
 )
 from endstone_primebds.utils.target_selector_util import get_target_entity
+
+# Use native exports even when the Python facade packages are unavailable.
+Location = level.Location
 
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
