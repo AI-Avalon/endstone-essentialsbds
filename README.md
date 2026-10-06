@@ -9,9 +9,9 @@
 </p>
 
 <p align="center">
-  <img alt="Endstone 0.11.9" src="https://img.shields.io/badge/Endstone-0.11.9-52b7a8?style=flat-square">
+  <img alt="Endstone 0.11.13" src="https://img.shields.io/badge/Endstone-0.11.13-52b7a8?style=flat-square">
   <img alt="API 0.11" src="https://img.shields.io/badge/API-0.11-63b8ff?style=flat-square">
-  <img alt="BDS 1.26.44" src="https://img.shields.io/badge/BDS-1.26.44-8b7dff?style=flat-square">
+  <img alt="BDS 1.26.52.3" src="https://img.shields.io/badge/BDS-1.26.52.3-8b7dff?style=flat-square">
   <img alt="Python >=3.10" src="https://img.shields.io/badge/Python-%3E=3.10-3776AB?style=flat-square&amp;logo=python&amp;logoColor=white">
 </p>
 
@@ -30,9 +30,9 @@
 
 ## Overview
 
-An essentials plugin for diagnostics, stability, and quality of life on Minecraft Bedrock Edition. This release is aligned with Endstone 0.11.9 and Minecraft Bedrock Dedicated Server 1.26.44, and is distributed as a Python wheel for direct installation in an Endstone server.
+An essentials plugin for diagnostics, stability, and quality of life on Minecraft Bedrock Edition. This release is aligned with Endstone 0.11.13 and Minecraft Bedrock Dedicated Server 1.26.52.3, and is distributed as a Python wheel for direct installation in an Endstone server.
 
-Version 3.5.4 fixes plugin loading when `endstone.inventory` or `endstone.level` is unavailable by resolving item and location types from Endstone's native exports. The fix covers command discovery, moderation, teleportation, database helpers, and connection handlers.
+Version 3.5.5 targets Endstone 0.11.13 / BDS 1.26.52.3 and retains the fixes for plugin loading when `endstone.inventory` or `endstone.level` is unavailable by resolving item and location types from Endstone's native exports. The fix covers command discovery, moderation, teleportation, database helpers, and connection handlers.
 
 ## What it does
 
@@ -137,18 +137,18 @@ See [commands.md](commands.md) for every hotspot syntax, filters, permissions, o
 
 | Component | Supported version |
 |---|---|
-| Endstone | `0.11.9` |
+| Endstone | `0.11.13` |
 | Endstone API | `0.11` |
-| Bedrock Dedicated Server | `1.26.44` |
+| Bedrock Dedicated Server | `1.26.52.3` |
 | Python | `>=3.10` |
-| Plugin release | `v3.5.4` |
+| Plugin release | `v3.5.5` |
 
 ## Install
 
 Download the wheel from the matching GitHub release:
 
 ```bash
-gh release download v3.5.4 --repo TheNINJALLO/endstone-essentialsbds --pattern "*.whl"
+gh release download v3.5.5 --repo TheNINJALLO/endstone-essentialsbds --pattern "*.whl"
 ```
 
 Copy the downloaded wheel into the server's `plugins/` directory, remove any older wheel for the same plugin, and restart Endstone.
@@ -157,7 +157,7 @@ Copy the downloaded wheel into the server's `plugins/` directory, remove any old
 > Starting with v3.5.1, the wheel is named `endstone_onistone_essentials-<version>-py3-none-any.whl`. Remove older `endstone_essentialsbds-*.whl` files before restarting so Endstone does not discover both distributions.
 
 > [!IMPORTANT]
-> Use Endstone `0.11.9` with BDS `1.26.44`. Back up worlds and plugin data before upgrading a production server.
+> Use Endstone `0.11.13` with BDS `1.26.52.3`. Back up worlds and plugin data before upgrading a production server.
 
 ## Configuration and secrets
 
@@ -192,7 +192,7 @@ Entity hotspot defaults are added under `modules.entity_hotspots` in `plugins/on
 
 Every completed scan also atomically replaces the easy-to-read Markdown report at `plugins/onistone_essentials/entity_hotspot_report.md`. It contains the full summary plus every ranked chunk and dense group. Report formatting and disk I/O run on one background worker so large reports do not block the server tick; set `write_report_file` to `false` to disable the file.
 
-Endstone 0.11.9 exposes the loaded actor collection as one indivisible operation, so `actors_per_tick` bounds actor validation and primitive-data capture after that measured acquisition; it cannot bound the initial collection call. Hitting the actor, duration, or access limits marks the result `INCOMPLETE`.
+Endstone 0.11.13 exposes the loaded actor collection as one indivisible operation, so `actors_per_tick` bounds actor validation and primitive-data capture after that measured acquisition; it cannot bound the initial collection call. Hitting the actor, duration, or access limits marks the result `INCOMPLETE`.
 
 ## Release automation
 
