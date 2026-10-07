@@ -18,8 +18,10 @@ command, permission = create_command(
 
 # TOP COMMAND FUNCTIONALITY
 def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) -> bool:
+    from endstone_primebds.utils.locale_util import tr
+
     if not isinstance(sender, Player):
-        sender.send_error_message(f"This command can only be executed by a player.")
+        sender.send_error_message(tr("heal.not_player", f"This command can only be executed by a player."))
         return False
 
     player = self.server.get_player(sender.name)
@@ -35,7 +37,7 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
     highest_y = min(dimension.get_highest_block_y_at(x, z), world_height)
 
     if highest_y < min_y:
-        sender.send_message(f"No valid open-air block found at this X, Z position.")
+        sender.send_message(tr("top.failed", f"No valid open-air block found at this X, Z position."))
         return False
 
     # Check for valid teleport spot by ensuring at least 2 air blocks above
@@ -45,7 +47,8 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
             dimension.get_block_at(x, y + 2, z).type == "minecraft:air"
         ):
             player.perform_command(f"tp {x} {y + 1} {z}")
+            sender.send_message(tr("top.success", "§aTeleported to the topmost block!"))
             return True
 
-    sender.send_message(f"No valid open-air block found at this X, Z position.")
+    sender.send_message(tr("top.failed", f"No valid open-air block found at this X, Z position."))
     return False

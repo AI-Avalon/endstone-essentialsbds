@@ -17,26 +17,28 @@ command, permission = create_command(
 
 # HEAL COMMAND FUNCTIONALITY
 def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) -> bool:
+    from endstone_primebds.utils.locale_util import tr
+
     if len(args) == 0:
         if not isinstance(sender, Player):
-            sender.send_message("This command can only be executed by a player")
+            sender.send_message(tr("heal.not_player", "This command can only be executed by a player"))
             return False
         sender.health = sender.max_health
-        sender.send_message(f'§aYou were healed')
+        sender.send_message(tr("heal.healed", "§aYou were healed"))
         return True
     
     if not sender.has_permission("onistone.command.heal.other"):
-        sender.send_message(f'§cYou do not have permission to heal others')
+        sender.send_message(tr("heal.no_perm_other", "§cYou do not have permission to heal others"))
         return True
     
     targets = get_matching_actors(self, args[0], sender)
     for target in targets:
         target.health = target.max_health
-        target.send_message('§aYou were healed')
+        target.send_message(tr("heal.healed", "§aYou were healed"))
         
     if len(targets) == 1:
-        sender.send_message(f'§e{targets[0].name} §rwas healed')
+        sender.send_message(tr("heal.healed_one", f"§e{targets[0].name} §rwas healed", target=targets[0].name))
     else:
-        sender.send_message(f'§e{len(targets)} §rplayers were healed')
+        sender.send_message(tr("heal.healed_multiple", f"§e{len(targets)} §rplayers were healed", count=len(targets)))
 
     return True

@@ -20,8 +20,10 @@ command, permission = create_command(
 
 # BOTTOM COMMAND FUNCTIONALITY
 def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) -> bool:
+    from endstone_primebds.utils.locale_util import tr
+
     if not isinstance(sender, Player):
-        sender.send_error_message(f"This command can only be executed by a player.")
+        sender.send_error_message(tr("heal.not_player", f"This command can only be executed by a player."))
         return False
 
     player = self.server.get_player(sender.name)
@@ -56,8 +58,9 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
                     break
 
     if lowest_air_y is None:
-        sender.send_message(f"No valid air pocket found at this X, Z position.")
+        sender.send_message(tr("bottom.failed", f"No valid air pocket found at this X, Z position."))
         return False
 
     player.perform_command(f"tp {x} {lowest_air_y} {z}")
+    sender.send_message(tr("bottom.success", "§aTeleported to the bottom-most block!"))
     return True
