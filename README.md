@@ -2,9 +2,6 @@
 <p align="center">
   <img src="docs/assets/banner.svg" width="100%" alt="Onistone Essentials &mdash; server administration and quality-of-life tools for Endstone">
 </p>
-<p align="center">
-  <a href="README.ja.md">日本語版 README はこちら</a>
-</p>
 
 <p align="center">
   <a href="https://github.com/TheNINJALLO/endstone-essentialsbds/actions/workflows/wheel-release.yml"><img alt="Build" src="https://img.shields.io/github/actions/workflow/status/TheNINJALLO/endstone-essentialsbds/wheel-release.yml?branch=main&amp;style=for-the-badge&amp;logo=githubactions&amp;logoColor=white&amp;label=Build"></a>
@@ -200,4 +197,6 @@ Endstone 0.11.13 exposes the loaded actor collection as one indivisible operatio
 ## Release automation
 
 Every `v*` tag runs [the wheel release workflow](.github/workflows/wheel-release.yml), builds the package in a clean GitHub runner, stores the wheel as a workflow artifact, and attaches it to the matching GitHub release.
+
+* [日本語版ドキュメント](README.ja.md)
 <!-- endstone-professional-header:end -->
