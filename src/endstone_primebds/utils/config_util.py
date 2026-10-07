@@ -7,7 +7,11 @@ from endstone_primebds.utils.permission_manager_util import migrate_permission_m
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 while not (os.path.exists(os.path.join(current_dir, 'plugins')) and os.path.exists(os.path.join(current_dir, 'worlds'))):
-    current_dir = os.path.dirname(current_dir)
+    parent_dir = os.path.dirname(current_dir)
+    if parent_dir == current_dir:
+        current_dir = os.getcwd()
+        break
+    current_dir = parent_dir
 
 CONFIG_FOLDER = os.path.join(current_dir, "plugins", "onistone_essentials")
 LEGACY_CONFIG_FOLDER = os.path.join(current_dir, "plugins", "primebds_data")

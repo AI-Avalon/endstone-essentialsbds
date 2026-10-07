@@ -29,7 +29,11 @@ Location = level.Location
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 while not (os.path.exists(os.path.join(current_dir, 'plugins')) and os.path.exists(os.path.join(current_dir, 'worlds'))):
-    current_dir = os.path.dirname(current_dir)
+    parent_dir = os.path.dirname(current_dir)
+    if parent_dir == current_dir:
+        current_dir = os.getcwd()
+        break
+    current_dir = parent_dir
 
 DB_FOLDER = os.path.join(CONFIG_FOLDER, "database")
 os.makedirs(DB_FOLDER, exist_ok=True)
