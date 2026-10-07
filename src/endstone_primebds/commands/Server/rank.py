@@ -15,17 +15,17 @@ if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
 
 command, permission = create_command(
-    "rank",
+    "setrank",
     tr("rank.msg_1", "Sets the internal rank for a player!"),
     [
-        "/rank",
-        "/rank (gui)<rank_gui: rank_gui>",
-        "/rank (set)<rank_set: rank_set> <player: player> <rank: string>",
-        "/rank (prefix|suffix)<rank_meta: rank_meta> <rank: string> <meta: message>",
-        "/rank (perm)<rank_perm: rank_perm> (add|remove)<perm_action: perm_action> <rank: string> <perm: string> [state: bool]",
-        "/rank (weight)<rank_weight: rank_weight> <rank: string> <weight: int>",
-        "/rank (inherit)<rank_inherit: rank_inherit> <rank_child: string> <rank_parent: string>",
-        "/rank (create|delete|list|info)<rank_action: rank_action> [rank: message]"
+        "/setrank",
+        "/setrank (gui)<rank_gui: rank_gui>",
+        "/setrank (set)<rank_set: rank_set> <player: player> <rank: string>",
+        "/setrank (prefix|suffix)<rank_meta: rank_meta> <rank: string> <meta: message>",
+        "/setrank (perm)<rank_perm: rank_perm> (add|remove)<perm_action: perm_action> <rank: string> <perm: string> [state: bool]",
+        "/setrank (weight)<rank_weight: rank_weight> <rank: string> <weight: int>",
+        "/setrank (inherit)<rank_inherit: rank_inherit> <rank_child: string> <rank_parent: string>",
+        "/setrank (create|delete|list|info)<rank_action: rank_action> [rank: message]"
     ],
     ["onistone.command.rank"]
 )

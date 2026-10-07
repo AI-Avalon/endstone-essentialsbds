@@ -232,8 +232,8 @@ def handle_server_command_preprocess(self: "OnistoneEssentials", event: ServerCo
         "ban": lambda: ["permban"] + args[1:],
         "unban": lambda: ["removeban"] + args[1:],
         "pardon": lambda: ["removeban"] + args[1:],
-        "op": lambda: ["rank", "set", f"\"{args[1]}\"", "operator"],
-        "deop": lambda: ["rank", "set", f"\"{args[1]}\"", "default"],
+        "op": lambda: ["setrank", "set", f"\"{args[1]}\"", "operator"],
+        "deop": lambda: ["setrank", "set", f"\"{args[1]}\"", "default"],
     }
 
     # Allowlist/Whitelist handling

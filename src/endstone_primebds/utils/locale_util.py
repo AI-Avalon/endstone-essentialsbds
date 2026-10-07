@@ -3,7 +3,7 @@ import os
 from endstone_primebds.utils.config_util import CONFIG_FOLDER, open_text_file
 
 _locales = {}
-_current_lang = "en_US"
+_current_lang = "ja_JP"
 _initialized = False
 
 def init_locales():
@@ -15,12 +15,13 @@ def init_locales():
     # Load language config
     from endstone_primebds.utils.config_util import load_config, save_config
     config = load_config()
-    lang = config.get("language", "en_US")
+    lang = config.get("language", "ja_JP")
     if "language" not in config:
-        config["language"] = "en_US"
+        config["language"] = "ja_JP"
         save_config(config)
     
     _current_lang = lang
+    print(f"[OnistoneEssentials] Loaded language: {_current_lang}")
     
     # Base directory for locales inside plugin src
     current_dir = os.path.dirname(os.path.abspath(__file__))
