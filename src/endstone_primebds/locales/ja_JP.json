@@ -209,5 +209,9 @@
     "permission_manager_gui.msg_27": "オンラインプレイヤー",
     "permission_manager_gui.msg_28": "プレイヤー権限の上書き設定",
     "permission_manager_gui.msg_29": "オンラインプレイヤーを選択するか、オフラインプレイヤーの場合は /permissions <player> を使用してください。",
-    "permission_manager_gui.msg_30": "上書き（オーバーライド）"
+    "permission_manager_gui.msg_30": "上書き（オーバーライド）",
+    "chat.msg_1": "§c現在、グローバルチャットは管理者によってミュートされています",
+    "chat.msg_2": "§cあなたのチャット機能は現在無効化されています",
+    "chat.msg_3": "§6あなたは現在ミュートされています。\n§6解除まで: §e{expires}\n§6理由: §e{reason}",
+    "chat.msg_4": "§6あなたは現在ミュートされています。\n§6解除まで: §e{expires}\n§6理由: §e{reason}"
 }

@@ -13,25 +13,22 @@ if TYPE_CHECKING:
 def handle_chat_event(self: "OnistoneEssentials", ev: PlayerChatEvent):
     user_muted = self.db.check_and_update_mute(ev.player.xuid, ev.player.name)
     ip_muted, ip_mute_time, ip_mute_reason = self.db.check_ip_mute(str(ev.player.address))
+    from endstone_primebds.utils.locale_util import tr
     if self.globalmute == 1 and not ev.player.has_permission("onistone.globalmute.exempt"):
-        ev.player.send_message(f"§cGlobal chat is currently muted by an admin")
+        ev.player.send_message(tr("chat.msg_1", "§cGlobal chat is currently muted by an admin"))
         ev.is_cancelled = True
         return False
     elif ev.player.xuid in self.silentmutes:
         ev.is_cancelled = True
-        ev.player.send_message(f"§cYour chats are currently disabled")
+        ev.player.send_message(tr("chat.msg_2", "§cYour chats are currently disabled"))
         return False
 
     if user_muted or ip_muted:
         if user_muted:
             user_mod = self.db.get_mod_log(ev.player.xuid)
-            ev.player.send_message(f"""§6You are currently muted.
-§6Expires: §e{format_time_remaining(user_mod.mute_time)}
-§6Reason: §e{user_mod.mute_reason}""")
+            ev.player.send_message(tr("chat.msg_3", "§6You are currently muted.\n§6Expires: §e{expires}\n§6Reason: §e{reason}", expires=format_time_remaining(user_mod.mute_time), reason=user_mod.mute_reason))
         else:
-            ev.player.send_message(f"""§6You are currently muted.
-§6Expires: §e{format_time_remaining(ip_mute_time)}
-§6Reason: §e{ip_mute_reason}""")
+            ev.player.send_message(tr("chat.msg_4", "§6You are currently muted.\n§6Expires: §e{expires}\n§6Reason: §e{reason}", expires=format_time_remaining(ip_mute_time), reason=ip_mute_reason))
         ev.is_cancelled = True
         return False
     

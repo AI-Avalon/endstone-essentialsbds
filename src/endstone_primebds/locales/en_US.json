@@ -209,5 +209,9 @@
     "permission_manager_gui.msg_27": "Online player",
     "permission_manager_gui.msg_28": "Player Permission Overrides",
     "permission_manager_gui.msg_29": "Choose an online player, or use /permissions <player> for an offline player.",
-    "permission_manager_gui.msg_30": "Override"
+    "permission_manager_gui.msg_30": "Override",
+    "chat.msg_1": "§cGlobal chat is currently muted by an admin",
+    "chat.msg_2": "§cYour chats are currently disabled",
+    "chat.msg_3": "§6You are currently muted.\n§6Expires: §e{expires}\n§6Reason: §e{reason}",
+    "chat.msg_4": "§6You are currently muted.\n§6Expires: §e{expires}\n§6Reason: §e{reason}"
 }
