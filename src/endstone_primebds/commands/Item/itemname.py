@@ -3,13 +3,14 @@ from endstone_primebds.utils.command_util import create_command
 from endstone_primebds.utils.target_selector_util import get_matching_actors
 
 from typing import TYPE_CHECKING
+from endstone_primebds.utils.locale_util import tr
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
 
 # Register command
 command, permission = create_command(
     "itemname",
-    "Modify item name data!",
+    tr("itemname.msg_1", "Modify item name data!"),
     [
         "/itemname <player: player> (set)<set_name: set_name> <item_name: string> (slot|helmet|chestplate|leggings|boots|mainhand|offhand)[slotType: slotTypeSetName] [slot: int]",
         "/itemname <player: player> (clear)<clear_name: clear_name> (slot|helmet|chestplate|leggings|boots|mainhand|offhand)[slotType: slotTypeClearName] [slot: int]"
@@ -19,7 +20,7 @@ command, permission = create_command(
 
 def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) -> bool:
     if len(args) < 2:
-        sender.send_message("§cUsage: /itemname <player> <set|clear> [name] [slotType] [slot]")
+        sender.send_message(tr("itemname.msg_2", "§cUsage: /itemname <player> <set|clear> [name] [slotType] [slot]"))
         return False
 
     target_selector = args[0]
@@ -28,7 +29,7 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
 
     targets = get_matching_actors(self, target_selector, sender)
     if not targets:
-        sender.send_message("§cNo matching players found")
+        sender.send_message(tr("iteminfo.msg_3", "§cNo matching players found"))
         return False
 
     slot_type = None
@@ -39,7 +40,7 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
         try:
             slot_index = int(args[4])
         except ValueError:
-            sender.send_message("§cSlot index must be a number")
+            sender.send_message(tr("iteminfo.msg_2", "§cSlot index must be a number"))
             return False
 
     for target in targets:
@@ -75,14 +76,14 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
         meta_data = held_item.item_meta
         if action == "set":
             if not name:
-                sender.send_message("§cPlease specify a name to set")
+                sender.send_message(tr("itemname.msg_3", "§cPlease specify a name to set"))
                 return False
             meta_data.display_name = name
         elif action == "clear":
             meta_data.display_name = None
             meta_data.lore = None
         else:
-            sender.send_message("§cInvalid action. Use 'set' or 'clear'")
+            sender.send_message(tr("itemname.msg_4", "§cInvalid action. Use 'set' or 'clear"))
             return False
 
         held_item.set_item_meta(meta_data)

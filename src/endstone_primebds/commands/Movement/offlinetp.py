@@ -4,6 +4,7 @@ from endstone_primebds.utils.command_util import create_command
 from endstone import level
 
 from typing import TYPE_CHECKING
+from endstone_primebds.utils.locale_util import tr
 
 # Use native exports even when the Python facade packages are unavailable.
 Location = level.Location
@@ -12,7 +13,7 @@ if TYPE_CHECKING:
 
 command, permission = create_command(
     "offlinetp",
-    "Teleport to where a player last logged out.",
+    tr("offlinetp.msg_1", "Teleport to where a player last logged out."),
     ["/offlinetp [player: player]"],
     ["onistone.command.offlinetp"],
     "op",
@@ -21,7 +22,7 @@ command, permission = create_command(
 
 def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) -> bool:
     if not isinstance(sender, Player):
-        sender.send_message("§cThis command can only be executed by a player")
+        sender.send_message(tr("more.msg_2", "§cThis command can only be executed by a player"))
         return False
 
     if any("@" in arg for arg in args):
@@ -29,7 +30,7 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
         return False
 
     if len(args) < 1:
-        sender.send_message("§cYou must specify a player to teleport to")
+        sender.send_message(tr("offlinetp.msg_2", "§cYou must specify a player to teleport to"))
         return False
 
     target_name = args[0]

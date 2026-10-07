@@ -3,6 +3,7 @@ from endstone_primebds.utils.command_util import create_command
 from endstone_primebds.utils.config_util import load_config
 
 from typing import TYPE_CHECKING
+from endstone_primebds.utils.locale_util import tr
 
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
@@ -10,7 +11,7 @@ if TYPE_CHECKING:
 # Register command
 command, permission = create_command(
     "broadcast",
-    "Send a server-wide notification!",
+    tr("broadcast.msg_1", "Send a server-wide notification!"),
     ["/broadcast <message: message>"],
     ["onistone.command.broadcast"]
 )

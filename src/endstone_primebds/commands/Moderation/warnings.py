@@ -8,6 +8,7 @@ from endstone_primebds.utils.command_util import create_command
 from endstone_primebds.utils.mod_util import format_time_remaining
 
 from typing import TYPE_CHECKING
+from endstone_primebds.utils.locale_util import tr
 
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
@@ -15,7 +16,7 @@ if TYPE_CHECKING:
 # Register command
 command, permission = create_command(
     "warnings",
-    "List warnings or permanently delete warnings from a player!",
+    tr("warnings.msg_1", "List warnings or permanently delete warnings from a player!"),
     [
         "/warnings <player: player> [page: int]",
         "/warnings <player: player> (delete|clear)<del_warn: del_warn> [id: int]"
@@ -25,13 +26,13 @@ command, permission = create_command(
 
 def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) -> bool:
     if BlockCommandSender is not None and isinstance(sender, BlockCommandSender):
-       sender.send_message("§cThis command cannot be automated")
+       sender.send_message(tr("clearchat.msg_2", "§cThis command cannot be automated"))
        return False
 
 
 
     if len(args) < 1:
-        sender.send_message("§cUsage: /warnings <player> [page:int]")
+        sender.send_message(tr("warnings.msg_2", "§cUsage: /warnings <player> [page:int]"))
         return False
 
     target_name = args[0]
@@ -41,7 +42,7 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
 
         if action == "delete":
             if len(args) < 3 or not args[2].isdigit():
-                sender.send_message("§cUsage: /warnings <player> delete <warning_id:int>")
+                sender.send_message(tr("warnings.msg_3", "§cUsage: /warnings <player> delete <warning_id:int>"))
                 return False
             warn_id = int(args[2])
             success = self.db.delete_warning_by_id(warn_id)

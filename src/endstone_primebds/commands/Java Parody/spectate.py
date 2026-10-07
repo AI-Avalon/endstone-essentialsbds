@@ -10,6 +10,8 @@ from endstone_primebds.utils.form_wrapper_util import (
 
 from endstone_primebds.utils.target_selector_util import get_matching_actors
 from endstone_primebds.utils.config_util import load_config
+from endstone_primebds.utils.locale_util import tr
+from endstone_primebds.utils.locale_util import tr
 
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
@@ -17,7 +19,7 @@ if TYPE_CHECKING:
 # Register command
 command, permission = create_command(
     "spectate",
-    "Warps you to a non-spectating player!",
+    tr("spectate.msg_1", "Warps you to a non-spectating player!"),
     ["/spectate [player: player]"],
     ["onistone.command.spectate"]
 )
@@ -37,7 +39,7 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
     ignore_tags = config["modules"]["spectator_check"].get("ignore_tags", [])
 
     if not isinstance(sender, Player):
-        sender.send_error_message("This command can only be executed by a player.")
+        sender.send_error_message(tr("spectate.msg_2", "This command can only be executed by a player."))
         return False
 
     if check_gamemode and sender.game_mode != GameMode.SPECTATOR:
@@ -62,8 +64,8 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
         players_to_spectate = [p for p in self.server.online_players if is_valid_spectate_target(p)]
         if players_to_spectate:
             form = ActionFormData()
-            form.title("Spectate Menu")
-            form.body("Select a player to spectate!")
+            form.title(tr("spectate.msg_5", "Spectate Menu"))
+            form.body(tr("spectate.msg_6", "Select a player to spectate!"))
 
             for player in players_to_spectate:
                 form.button(player.name_tag)
@@ -86,7 +88,7 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
     else:
         targets = get_matching_actors(sender, args[0], sender)
         if not targets:
-            sender.send_message("Unable to find target player")
+            sender.send_message(tr("spectate.msg_3", "Unable to find target player"))
             return False
 
         tried = set()
@@ -99,7 +101,7 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
             warp_player(sender, target, force_gamemode)
             return True
 
-        sender.send_message("No valid players available to spectate.")
+        sender.send_message(tr("spectate.msg_4", "No valid players available to spectate."))
         return False
 
 def warp_player(sender: Player, target: Player, force_gamemode):

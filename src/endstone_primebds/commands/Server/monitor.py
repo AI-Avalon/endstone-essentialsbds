@@ -3,6 +3,7 @@ from endstone import Player, ColorFormat
 from endstone.command import CommandSender
 from endstone_primebds.utils.command_util import create_command
 from typing import TYPE_CHECKING
+from endstone_primebds.utils.locale_util import tr
 
 try:
     from bedrock_protocol.packets import MinecraftPacketIds
@@ -17,14 +18,14 @@ if TYPE_CHECKING:
 # Command registration
 command, permission = create_command(
     "monitor",
-    "Monitor server performance in real time!",
+    tr("monitor.msg_1", "Monitor server performance in real time!"),
     ["/monitor (server|packets|disable)[debug: debug]"],
     ["onistone.command.monitor"]
 )
 
 def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) -> bool:
     if not isinstance(sender, Player):
-        sender.send_error_message("This command can only be executed by a player")
+        sender.send_error_message(tr("heal.not_player", "This command can only be executed by a player"))
         return True
 
     player_name = sender.name
@@ -45,10 +46,10 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
                     "time": time.time(),
                     "counts": {}
                 }
-            sender.send_message("§cMonitoring turned off")
+            sender.send_message(tr("monitor.msg_2", "§cMonitoring turned off"))
             return True
 
-        sender.send_message("§ePrevious monitoring canceled, applying new settings...")
+        sender.send_message(tr("monitor.msg_3", "§ePrevious monitoring canceled, applying new settings..."))
 
     if mode == "packets" and not PACKET_SUPPORT:
         return False
@@ -161,7 +162,7 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
         self.monitor_intervals[player_name] = task.task_id
         sender.send_message(f"§aMonitoring turned on with {interval:.1f}s interval ({mode} mode)")
     else:
-        sender.send_error_message("Failed to start monitoring task.")
+        sender.send_error_message(tr("monitor.msg_4", "Failed to start monitoring task."))
 
     return True
 

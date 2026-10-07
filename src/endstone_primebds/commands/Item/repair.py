@@ -4,13 +4,14 @@ from endstone_primebds.utils.command_util import create_command
 from endstone_primebds.utils.target_selector_util import get_matching_actors
 
 from typing import TYPE_CHECKING
+from endstone_primebds.utils.locale_util import tr
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
 
 # Register command
 command, permission = create_command(
     "repair",
-    "Repairs the item in hand!",
+    tr("repair.msg_1", "Repairs the item in hand!"),
     ["/repair [player: player]"],
     ["onistone.command.repair", "onistone.command.repair.other"]
 )
@@ -19,12 +20,12 @@ command, permission = create_command(
 def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) -> bool:
     if len(args) == 0:
         if not isinstance(sender, Player):
-            sender.send_message("§cThis command can only be executed by a player")
+            sender.send_message(tr("more.msg_2", "§cThis command can only be executed by a player"))
             return False
 
         held_item = sender.inventory.item_in_main_hand
         if held_item is None:
-            sender.send_message("§cYou are not holding an item to repair")
+            sender.send_message(tr("repair.msg_2", "§cYou are not holding an item to repair"))
             return False
 
         meta = held_item.item_meta
@@ -32,16 +33,16 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
         held_item.set_item_meta(meta)
         sender.inventory.set_item(sender.inventory.held_item_slot, held_item)
 
-        sender.send_message("§aYour held item was repaired")
+        sender.send_message(tr("repair.msg_3", "§aYour held item was repaired"))
         return True
 
     if not sender.has_permission("onistone.command.repair.other"):
-        sender.send_message("§cYou do not have permission to repair others' items")
+        sender.send_message(tr("repair.msg_4", "§cYou do not have permission to repair others' items"))
         return True
 
     targets = get_matching_actors(self, args[0], sender)
     if not targets:
-        sender.send_message("§cNo matching players found")
+        sender.send_message(tr("iteminfo.msg_3", "§cNo matching players found"))
         return False
 
     repaired_count = 0
@@ -55,11 +56,11 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
         held_item.set_item_meta(meta)
         target.inventory.set_item(target.inventory.held_item_slot, held_item)
 
-        target.send_message("§aYour held item was repaired")
+        target.send_message(tr("repair.msg_3", "§aYour held item was repaired"))
         repaired_count += 1
 
     if repaired_count == 0:
-        sender.send_message("§cNo items to repair for the selected targets")
+        sender.send_message(tr("repair.msg_5", "§cNo items to repair for the selected targets"))
     elif repaired_count == 1:
         sender.send_message(f"§e{targets[0].name}§r's item was repaired")
     else:

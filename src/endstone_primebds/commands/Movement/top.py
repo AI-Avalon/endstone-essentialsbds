@@ -4,6 +4,7 @@ from endstone_primebds.utils.command_util import create_command
 
 
 from typing import TYPE_CHECKING
+from endstone_primebds.utils.locale_util import tr
 
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
@@ -11,7 +12,7 @@ if TYPE_CHECKING:
 # Register command
 command, permission = create_command(
     "top",
-    "Warps you to the topmost block with air!",
+    tr("top.msg_1", "Warps you to the topmost block with air!"),
     ["/top"],
     ["onistone.command.top"]
 )

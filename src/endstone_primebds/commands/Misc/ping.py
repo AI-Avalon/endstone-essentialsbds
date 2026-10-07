@@ -4,6 +4,7 @@ from endstone_primebds.utils.command_util import create_command
 from endstone_primebds.utils.target_selector_util import get_matching_actors
 
 from typing import TYPE_CHECKING
+from endstone_primebds.utils.locale_util import tr
 
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
@@ -11,7 +12,7 @@ if TYPE_CHECKING:
 # Register command
 command, permission = create_command(
     "ping",
-    "Checks the server ping!",
+    tr("ping.msg_1", "Checks the server ping!"),
     ["/ping [player: player]"],
     ["onistone.command.ping"]
 )
@@ -20,7 +21,7 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
     from endstone_primebds.utils.locale_util import tr
     if len(args) == 0:
         if not isinstance(sender, Player):
-            sender.send_error_message("This command can only be executed by a player")
+            sender.send_error_message(tr("heal.not_player", "This command can only be executed by a player"))
             return False
 
         ping = sender.ping

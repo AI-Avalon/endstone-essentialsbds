@@ -10,6 +10,7 @@ from endstone import level
 from endstone import GameMode
 
 from typing import TYPE_CHECKING
+from endstone_primebds.utils.locale_util import tr
 
 # Use native exports even when the Python facade packages are unavailable.
 Location = level.Location
@@ -20,7 +21,7 @@ if TYPE_CHECKING:
 # Register command
 command, permission = create_command(
     "unjail",
-    "Free a jailed player!",
+    tr("unjail.msg_1", "Free a jailed player!"),
     [
         "/unjail <player: player>"
     ],
@@ -30,7 +31,7 @@ command, permission = create_command(
 # UNJAIL COMMAND FUNCTIONALITY
 def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) -> bool:
     if BlockCommandSender is not None and isinstance(sender, BlockCommandSender):
-       sender.send_message("§cThis command cannot be automated")
+       sender.send_message(tr("clearchat.msg_2", "§cThis command cannot be automated"))
        return False
 
     if any("@" in arg for arg in args):

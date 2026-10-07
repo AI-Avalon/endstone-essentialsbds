@@ -9,6 +9,7 @@ from endstone_primebds.utils.mod_util import format_time_remaining
 from endstone_primebds.utils.logging_util import log
 
 from typing import TYPE_CHECKING
+from endstone_primebds.utils.locale_util import tr
 
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
@@ -16,20 +17,20 @@ if TYPE_CHECKING:
 # Register command
 command, permission = create_command(
     "warn",
-    "Warn a player that they are breaking a rule!",
+    tr("warn.msg_1", "Warn a player that they are breaking a rule!"),
     ["/warn <player: player> <reason: string> [duration_number: int] (second|minute|hour|day|week|month|year)[duration_length: warn_length]"],
     ["onistone.command.warn"]
 )
 
 def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) -> bool:
     if BlockCommandSender is not None and isinstance(sender, BlockCommandSender):
-       sender.send_message("§cThis command cannot be automated")
+       sender.send_message(tr("clearchat.msg_2", "§cThis command cannot be automated"))
        return False
 
 
 
     if len(args) < 2:
-        sender.send_message("§cUsage: /warn <player> <reason> [duration_number] [duration_length]")
+        sender.send_message(tr("warn.msg_2", "§cUsage: /warn <player> <reason> [duration_number] [duration_length]"))
         return False
 
     target_name = args[0]
@@ -63,7 +64,7 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
     reason = " ".join(reason_parts).strip()
 
     if not reason:
-        sender.send_message("§cYou must provide a reason for the warning")
+        sender.send_message(tr("warn.msg_3", "§cYou must provide a reason for the warning"))
         return False
 
     self.db.add_warning(

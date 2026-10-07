@@ -4,13 +4,14 @@ from endstone_primebds.utils.command_util import create_command
 from endstone_primebds.utils.target_selector_util import get_matching_actors
 
 from typing import TYPE_CHECKING
+from endstone_primebds.utils.locale_util import tr
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
 
 # Register command
 command, permission = create_command(
     "iteminfo",
-    "Check item data!",
+    tr("iteminfo.msg_1", "Check item data!"),
     [
         "/iteminfo [player: player] (slot|helmet|chestplate|leggings|boots|mainhand|offhand)[slotTypeInfo: slotTypeInfo] [slot: int]"
     ],
@@ -31,7 +32,7 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
                 try:
                     slot_index = int(args[1])
                 except ValueError:
-                    sender.send_message("§cSlot index must be a number")
+                    sender.send_message(tr("iteminfo.msg_2", "§cSlot index must be a number"))
                     return False
             targets = [sender]
         else:
@@ -39,7 +40,7 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
             targets = get_matching_actors(self, target_selector, sender)
 
             if not targets:
-                sender.send_message("§cNo matching players found")
+                sender.send_message(tr("iteminfo.msg_3", "§cNo matching players found"))
                 return False
 
             if len(args) > 1:
@@ -48,14 +49,14 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
                 try:
                     slot_index = int(args[2])
                 except ValueError:
-                    sender.send_message("§cSlot index must be a number")
+                    sender.send_message(tr("iteminfo.msg_2", "§cSlot index must be a number"))
                     return False
     else:
         targets = [sender]
 
     for target in targets:
         if not isinstance(target, Player):
-            sender.send_message("§cItem information is only available for players")
+            sender.send_message(tr("iteminfo.msg_4", "§cItem information is only available for players"))
             continue
         inv = target.inventory
 

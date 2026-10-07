@@ -9,13 +9,14 @@ import endstone_primebds.utils.internal_permissions_util as perms_util
 from endstone_primebds.utils.config_util import load_permissions, save_permissions
 
 from typing import TYPE_CHECKING
+from endstone_primebds.utils.locale_util import tr
 
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
 
 command, permission = create_command(
     "rank",
-    "Sets the internal rank for a player!",
+    tr("rank.msg_1", "Sets the internal rank for a player!"),
     [
         "/rank",
         "/rank (gui)<rank_gui: rank_gui>",
@@ -32,16 +33,16 @@ command, permission = create_command(
 # RANK COMMAND FUNCTIONALITY
 def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) -> bool:
     if BlockCommandSender is not None and isinstance(sender, BlockCommandSender):
-       sender.send_message("§cThis command cannot be automated")
+       sender.send_message(tr("clearchat.msg_2", "§cThis command cannot be automated"))
        return False
 
     if any("@" in arg for arg in args):
-        sender.send_message("§cTarget selectors are invalid for this command")
+        sender.send_message(tr("common.target_selector_invalid", "§cTarget selectors are invalid for this command"))
         return False
 
     if not args or args[0].lower() == "gui":
         if not isinstance(sender, Player):
-            sender.send_message("This GUI can only be opened by a player.")
+            sender.send_message(tr("rank.msg_2", "This GUI can only be opened by a player."))
             return False
         from endstone_primebds.commands.Server.permission_manager_gui import (
             open_permissions_manager,
@@ -132,7 +133,7 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
 
         actual_rank = find_rank(rank_name, perms)
         if actual_rank == "Default" or actual_rank == "Operator":
-            sender.send_message("§cThis rank cannot be deleted")
+            sender.send_message(tr("rank.msg_3", "§cThis rank cannot be deleted"))
             return False
 
         del perms[actual_rank]
@@ -144,7 +145,7 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
 
     elif subaction == "info":
         if len(args) < 2:
-            sender.send_message("§cYou must specify a rank")
+            sender.send_message(tr("rank.msg_4", "§cYou must specify a rank"))
             return False
         rank_name = args[1].lower()
 
@@ -165,7 +166,7 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
         sender.send_message(f"§bInherits: §r{rank.get('inherits', [])}")
         sender.send_message(f"§bPrefix: §r{rank.get('prefix', 'Unset')}")
         sender.send_message(f"§bSuffix: §r{rank.get('suffix', 'Unset')}")
-        sender.send_message("§bPermissions:")
+        sender.send_message(tr("rank.msg_5", "§bPermissions:"))
         for perm, value in rank.get("permissions", {}).items():
             color = "§a" if value else "§c"
             sender.send_message(f"  §7- §e{perm}: {color}{value}")
@@ -220,10 +221,10 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
 
     elif subaction == "list":
         if not perms:
-            sender.send_message("§eNo ranks available.")
+            sender.send_message(tr("rank.msg_6", "§eNo ranks available."))
             return True
 
-        sender.send_message("§bAvailable ranks:")
+        sender.send_message(tr("rank.msg_7", "§bAvailable ranks:"))
         for rank in perms:
             sender.send_message(f" §7- §e{rank}")
         return True
@@ -271,7 +272,7 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
         try:
             new_weight = int(args[2])
         except ValueError:
-            sender.send_message("§cWeight must be an integer")
+            sender.send_message(tr("rank.msg_8", "§cWeight must be an integer"))
             return
 
         perms[actual_rank]["weight"] = new_weight

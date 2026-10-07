@@ -3,6 +3,7 @@ from endstone.command import CommandSender
 from endstone_primebds.utils.command_util import create_command
 from typing import TYPE_CHECKING
 import math
+from endstone_primebds.utils.locale_util import tr
 
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
@@ -10,14 +11,14 @@ if TYPE_CHECKING:
 # Command registration
 command, permission = create_command(
     "blockscan",
-    "Continuously show information about the block you're looking at.",
+    tr("blockscan.msg_1", "Continuously show information about the block you're looking at."),
     ["/blockscan (disable)[blockscan: blockscan]"],
     ["onistone.command.blockscan"]
 )
 
 def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) -> bool:
     if not isinstance(sender, Player):
-        sender.send_message("§cOnly players can use this command")
+        sender.send_message(tr("blockscan.msg_2", "§cOnly players can use this command"))
         return True
 
     player_name = sender.name
@@ -28,7 +29,7 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
     if player_name in self.blockscan_intervals:
         self.server.scheduler.cancel_task(self.blockscan_intervals[player_name])
         del self.blockscan_intervals[player_name]
-        sender.send_message("§cBlock scanning disabled")
+        sender.send_message(tr("blockscan.msg_3", "§cBlock scanning disabled"))
         return True
 
     interval_seconds = 0.5
@@ -102,7 +103,7 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
                 f"§7- §eRuntime ID: §f{runtime_id}"
             )
         else:
-            player.send_tip("§cNo block in sight")
+            player.send_tip(tr("blockinfo.msg_3", "§cNo block in sight"))
 
     task = self.server.scheduler.run_task(
         self,
@@ -113,9 +114,9 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
 
     if task:
         self.blockscan_intervals[player_name] = task.task_id
-        sender.send_message("§aBlock scanning enabled")
+        sender.send_message(tr("blockscan.msg_4", "§aBlock scanning enabled"))
     else:
-        sender.send_message("§cFailed to start block scanning task")
+        sender.send_message(tr("blockscan.msg_5", "§cFailed to start block scanning task"))
 
     return True
 

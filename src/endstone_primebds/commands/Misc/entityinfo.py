@@ -27,6 +27,7 @@ from endstone_primebds.utils.entity_hotspots import (
     paginate,
 )
 from endstone_primebds.utils.target_selector_util import get_target_entity
+from endstone_primebds.utils.locale_util import tr
 
 # Use native exports even when the Python facade packages are unavailable.
 Location = level.Location
@@ -41,7 +42,7 @@ TELEPORT_PERMISSION = "onistone.command.entityinfo.hotspots.teleport"
 
 command, permission = create_command(
     "entityinfo",
-    "Inspect entities and locate loaded-entity hotspots",
+    tr("entityinfo.msg_1", "Inspect entities and locate loaded-entity hotspots"),
     [
         "/entityinfo",
         "/entityinfo <action: str>",
@@ -202,7 +203,7 @@ def _show_snapshot(
                 f"§7No chunks met the configured dense threshold ({settings.dense_chunk_threshold})."
             )
         else:
-            sender.send_message("§7No loaded entities matched this query.")
+            sender.send_message(tr("entityinfo.msg_2", "§7No loaded entities matched this query."))
         return True
 
     start_rank = (page - 1) * settings.results_per_page + 1
@@ -225,7 +226,7 @@ def _show_snapshot(
                 f"near {coordinates}\n  §7{_short_types(result.type_counts)}"
             )
     sender.send_message(
-        "§8Use /entityinfo hotspots detail <rank> or /entityinfo tp <rank>."
+        tr("entityinfo.msg_3", "§8Use /entityinfo hotspots detail <rank> or /entityinfo tp <rank>.")
     )
     return True
 
@@ -366,13 +367,13 @@ def _show_detail(self: "OnistoneEssentials", sender: CommandSender, rank: int) -
 
 def _teleport_to_rank(self: "OnistoneEssentials", sender: CommandSender, rank: int) -> bool:
     if not isinstance(sender, Player):
-        sender.send_message("§cOnly a player can teleport to a hotspot.")
+        sender.send_message(tr("entityinfo.msg_4", "§cOnly a player can teleport to a hotspot."))
         return False
     if not _require_permission(sender, TELEPORT_PERMISSION):
         return False
     settings = self.entity_hotspot_service.settings()
     if not settings.teleport_enabled:
-        sender.send_message("§cHotspot teleporting is disabled in config.json.")
+        sender.send_message(tr("entityinfo.msg_5", "§cHotspot teleporting is disabled in config.json."))
         return False
 
     owner_key = self.entity_hotspot_service.sender_key(sender)
@@ -414,7 +415,7 @@ def _teleport_to_rank(self: "OnistoneEssentials", sender: CommandSender, rank: i
         sender.send_message(f"§cTeleport failed without moving you: {exc}")
         return False
     if not teleported:
-        sender.send_message("§cEndstone rejected the teleport; you were not moved.")
+        sender.send_message(tr("entityinfo.msg_6", "§cEndstone rejected the teleport; you were not moved."))
         return False
     sender.send_message(
         f"§aTeleported near hotspot #{rank} in {result.dimension_name} at "
@@ -456,13 +457,13 @@ def _handle_hotspots(
         return _show_hotspot_help(sender)
     if action == "detail":
         if len(args) != 3:
-            sender.send_message("§cUsage: /entityinfo hotspots detail <rank>")
+            sender.send_message(tr("entityinfo.msg_7", "§cUsage: /entityinfo hotspots detail <rank>"))
             return False
         rank = _safe_int(args[2], "Rank", sender)
         return False if rank is None else _show_detail(self, sender, rank)
     if action == "refresh":
         if len(args) != 2:
-            sender.send_message("§cUsage: /entityinfo hotspots refresh")
+            sender.send_message(tr("entityinfo.msg_8", "§cUsage: /entityinfo hotspots refresh"))
             return False
         owner_key = self.entity_hotspot_service.sender_key(sender)
         try:
@@ -498,7 +499,7 @@ def _handle_hotspots(
             return False
         mode = args[2].lower()
         if mode not in ("chunks", "groups"):
-            sender.send_message("§cFilter mode must be chunks or groups.")
+            sender.send_message(tr("entityinfo.msg_9", "§cFilter mode must be chunks or groups."))
             return False
         try:
             filters = HotspotFilter.create(args[3], args[4])
@@ -520,13 +521,13 @@ def _handle_hotspots(
                 sender.send_message(f"§c{exc}")
                 return False
             return _view_selected(self, sender, "chunks", page)
-    sender.send_message("§cUnknown hotspot action. Use /entityinfo hotspots help.")
+    sender.send_message(tr("entityinfo.msg_10", "§cUnknown hotspot action. Use /entityinfo hotspots help."))
     return False
 
 
 def _handle_list(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) -> bool:
     if len(args) > 2:
-        sender.send_message("§cUsage: /entityinfo list [page]")
+        sender.send_message(tr("entityinfo.msg_11", "§cUsage: /entityinfo list [page]"))
         return False
     page = 1 if len(args) == 1 else _safe_int(args[1], "Page", sender)
     if page is None:
@@ -560,11 +561,11 @@ def _handle_list(self: "OnistoneEssentials", sender: CommandSender, args: list[s
 
 def _handle_target(sender: CommandSender) -> bool:
     if not isinstance(sender, Player):
-        sender.send_message("§cTargeted entity inspection can only be executed by a player.")
+        sender.send_message(tr("entityinfo.msg_12", "§cTargeted entity inspection can only be executed by a player."))
         return False
     actor = get_target_entity(sender)
     if actor is None:
-        sender.send_message("§cNo entities found 10 blocks in front of you.")
+        sender.send_message(tr("entityinfo.msg_13", "§cNo entities found 10 blocks in front of you."))
         return False
     health = f"{actor.health}/{actor.max_health}" if isinstance(actor, Mob) else "N/A"
     sender.send_message(
@@ -589,10 +590,10 @@ def _handle_target(sender: CommandSender) -> bool:
 
 def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) -> bool:
     if BlockCommandSender is not None and isinstance(sender, BlockCommandSender):
-        sender.send_message("§cThis command cannot be automated by a command block.")
+        sender.send_message(tr("entityinfo.msg_14", "§cThis command cannot be automated by a command block."))
         return False
     if any("@" in arg for arg in args):
-        sender.send_message("§cTarget selectors are invalid for this command.")
+        sender.send_message(tr("entityinfo.msg_15", "§cTarget selectors are invalid for this command."))
         return False
     if not args:
         return _handle_target(sender)
@@ -604,10 +605,10 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
         return _handle_hotspots(self, sender, args)
     if action == "tp":
         if len(args) != 2:
-            sender.send_message("§cUsage: /entityinfo tp <rank>")
+            sender.send_message(tr("entityinfo.msg_16", "§cUsage: /entityinfo tp <rank>"))
             return False
         rank = _safe_int(args[1], "Rank", sender)
         return False if rank is None else _teleport_to_rank(self, sender, rank)
 
-    sender.send_message("§cUnknown action. Use /entityinfo hotspots help.")
+    sender.send_message(tr("entityinfo.msg_17", "§cUnknown action. Use /entityinfo hotspots help."))
     return False

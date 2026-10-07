@@ -4,6 +4,7 @@ from endstone_primebds.utils.command_util import create_command
 from endstone_primebds.utils.target_selector_util import get_matching_actors
 
 from typing import TYPE_CHECKING
+from endstone_primebds.utils.locale_util import tr
 
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
@@ -11,7 +12,7 @@ if TYPE_CHECKING:
 # Register command
 command, permission = create_command(
     "toast",
-    "Sends a custom toast message!",
+    tr("toast.msg_1", "Sends a custom toast message!"),
     ["/toast <player: player> <title: string> <text: message>"],
     ["onistone.command.toast"]
 )
@@ -19,7 +20,7 @@ command, permission = create_command(
 # TOAST COMMAND FUNCTIONALITY
 def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) -> bool:
     if len(args) < 3:
-        sender.send_message("§cUsage: /toast <player> <title> <text>")
+        sender.send_message(tr("toast.msg_2", "§cUsage: /toast <player> <title> <text>"))
         return False
 
     targets = get_matching_actors(self, args[0], sender)
@@ -30,7 +31,7 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
     title = args[1]
     message = " ".join(args[2:]).strip()
     if not message:
-        sender.send_message("§cToast message cannot be empty")
+        sender.send_message(tr("toast.msg_3", "§cToast message cannot be empty"))
         return False
 
     for player in targets:

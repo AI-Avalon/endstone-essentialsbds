@@ -14,6 +14,8 @@ from endstone_primebds.utils.form_wrapper_util import (
 )
 
 from typing import TYPE_CHECKING
+from endstone_primebds.utils.locale_util import tr
+from endstone_primebds.utils.locale_util import tr
 
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
@@ -21,7 +23,7 @@ if TYPE_CHECKING:
 # Register command
 command, permission = create_command(
     "permissionslist",
-    "View the global or player-specific permissions list!",
+    tr("permissionslist.msg_1", "View the global or player-specific permissions list!"),
     [
         f"/permissionslist [player: player]"
     ],
@@ -33,7 +35,7 @@ command, permission = create_command(
 # SETRANK COMMAND FUNCTIONALITY
 def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) -> bool:
     if BlockCommandSender is not None and isinstance(sender, BlockCommandSender):
-       sender.send_message("§cThis command cannot be automated")
+       sender.send_message(tr("clearchat.msg_2", "§cThis command cannot be automated"))
        return False
 
     if any("@" in arg for arg in args):
@@ -60,9 +62,9 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
 
         if isinstance(sender, Player):
             form = ActionFormData()
-            form.title("Server Permissions List")
+            form.title(tr("permissionslist.msg_2", "Server Permissions List"))
             form.body(body_text)
-            form.button("Close")
+            form.button(tr("permissionslist.msg_3", "Close"))
             def submit(player_obj: Player, result: ActionFormResponse):
                 pass
 
@@ -98,7 +100,7 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
         form = ActionFormData()
         form.title(f"{player.name}'s Permissions")
         form.body(body_text)
-        form.button("Close")
+        form.button(tr("permissionslist.msg_3", "Close"))
         def submit(player_obj: Player, result: ActionFormResponse):
             pass
 

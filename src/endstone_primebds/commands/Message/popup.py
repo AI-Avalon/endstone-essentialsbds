@@ -3,6 +3,7 @@ from endstone_primebds.utils.command_util import create_command
 from endstone_primebds.utils.target_selector_util import get_matching_actors
 
 from typing import TYPE_CHECKING
+from endstone_primebds.utils.locale_util import tr
 
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
@@ -10,7 +11,7 @@ if TYPE_CHECKING:
 # Register command
 command, permission = create_command(
     "popup",
-    "Sends a custom popup message!",
+    tr("popup.msg_1", "Sends a custom popup message!"),
     ["/popup <player: player> <text: message>"],
     ["onistone.command.popup"]
 )
@@ -19,7 +20,7 @@ command, permission = create_command(
 def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) -> bool:
 
     if len(args) < 2:
-        sender.send_message("§cUsage: /popup <player> <text>")
+        sender.send_message(tr("popup.msg_2", "§cUsage: /popup <player> <text>"))
         return False
 
     targets = get_matching_actors(self, args[0], sender)
@@ -29,7 +30,7 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
 
     message = " ".join(args[1:]).strip() if len(args) > 1 else ""
     if not message:
-        sender.send_message("§cPopup message cannot be empty")
+        sender.send_message(tr("popup.msg_3", "§cPopup message cannot be empty"))
         return False
 
     for target in targets:

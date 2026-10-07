@@ -8,6 +8,7 @@ from endstone_primebds.utils.logging_util import log
 from endstone_primebds.utils.address_util import is_valid_ip
 
 from typing import TYPE_CHECKING
+from endstone_primebds.utils.locale_util import tr
 
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
@@ -15,7 +16,7 @@ if TYPE_CHECKING:
 # Register command
 command, permission = create_command(
     "removeban",
-    "Removes an active ban from a player!",
+    tr("removeban.msg_1", "Removes an active ban from a player!"),
     [
         "/removeban <player: player>",
         "/removeban <player: player> (ip)<perm_removeban: perm_removeban>"
@@ -26,7 +27,7 @@ command, permission = create_command(
 # REMOVEBAN COMMAND FUNCTIONALITY
 def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) -> bool:
     if BlockCommandSender is not None and isinstance(sender, BlockCommandSender):
-        sender.send_message("§cThis command cannot be automated")
+        sender.send_message(tr("clearchat.msg_2", "§cThis command cannot be automated"))
         return False
 
     if len(args) < 1:

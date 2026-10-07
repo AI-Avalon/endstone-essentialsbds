@@ -7,13 +7,14 @@ except ImportError:
 from endstone_primebds.utils.command_util import create_command
 
 from typing import TYPE_CHECKING
+from endstone_primebds.utils.locale_util import tr
 
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
 
 command, permission = create_command(
     "permissions",
-    "Sets the internal permissions for a player!",
+    tr("permissions.msg_1", "Sets the internal permissions for a player!"),
     [
         "/permissions",
         "/permissions <player: player>",
@@ -27,11 +28,11 @@ command, permission = create_command(
 # PERMISSIONS COMMAND FUNCTIONALITY
 def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) -> bool:
     if BlockCommandSender is not None and isinstance(sender, BlockCommandSender):
-       sender.send_message("§cThis command cannot be automated")
+       sender.send_message(tr("clearchat.msg_2", "§cThis command cannot be automated"))
        return False
 
     if any("@" in arg for arg in args):
-        sender.send_message("§cTarget selectors are invalid for this command")
+        sender.send_message(tr("common.target_selector_invalid", "§cTarget selectors are invalid for this command"))
         return False
 
     if len(args) <= 1:

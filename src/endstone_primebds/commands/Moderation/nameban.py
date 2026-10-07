@@ -10,6 +10,7 @@ from endstone_primebds.utils.mod_util import format_time_remaining, ban_message,
 from datetime import timedelta, datetime
 
 from typing import TYPE_CHECKING
+from endstone_primebds.utils.locale_util import tr
 
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
@@ -17,7 +18,7 @@ if TYPE_CHECKING:
 # Register command
 command, permission = create_command(
     "nameban",
-    "Bans a player's name from the server, either temporarily or permanently!",
+    tr("nameban.msg_1", "Bans a player's name from the server, either temporarily or permanently!"),
     [
         "/nameban <player: player> <duration_number: int> (second|minute|hour|day|week|month|year)<duration_length: name_ban_length> [reason: message]",
         "/nameban <player: player> (forever)<name_ban: name_ban> [reason: message]"
@@ -28,7 +29,7 @@ command, permission = create_command(
 # PERMBAN COMMAND FUNCTIONALITY
 def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) -> bool:
     if BlockCommandSender is not None and isinstance(sender, BlockCommandSender):
-       sender.send_message("§cThis command cannot be automated")
+       sender.send_message(tr("clearchat.msg_2", "§cThis command cannot be automated"))
        return False
 
     if any("@" in arg for arg in args):

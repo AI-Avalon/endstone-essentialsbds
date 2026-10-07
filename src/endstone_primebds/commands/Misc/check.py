@@ -7,6 +7,7 @@ from endstone.command import CommandSender
 from endstone_primebds.utils.command_util import create_command
 
 from typing import TYPE_CHECKING
+from endstone_primebds.utils.locale_util import tr
 
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
@@ -14,7 +15,7 @@ if TYPE_CHECKING:
 # Register command
 command, permission = create_command(
     "check",
-    "Checks a player's client info!",
+    tr("check.msg_1", "Checks a player's client info!"),
     ["/check <player: player> (info|mod|jail|network|world)[info: info]"],
     ["onistone.command.check"],
     "op",

@@ -7,6 +7,7 @@ from endstone_primebds.utils.logging_util import log, discordRelay
 from endstone_primebds.utils.target_selector_util import get_matching_actors
 
 import endstone_primebds.utils.internal_permissions_util as perms_util
+from endstone_primebds.utils.locale_util import tr
 
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
@@ -37,7 +38,7 @@ def handle_command_preprocess(self: "OnistoneEssentials", event: PlayerCommandEv
         player.send_message(f"§cInvalid command syntax: {e}")
         return True 
     except IndexError:
-        player.send_message("§cInvalid command format")
+        player.send_message(tr("preprocesses.msg_1", "§cInvalid command format"))
         return True
     
     config = load_config()
@@ -169,7 +170,7 @@ def handle_command_preprocess(self: "OnistoneEssentials", event: PlayerCommandEv
         elif sub == "list":
             player.perform_command("alist list")
         elif sub in {"on", "off"}:
-            player.send_message("Mojang has this feature disabled")
+            player.send_message(tr("preprocesses.msg_2", "Mojang has this feature disabled"))
         event.is_cancelled = True
         return False
     elif cmd == "transfer" and len(args) > 2:
@@ -187,7 +188,7 @@ def handle_command_preprocess(self: "OnistoneEssentials", event: PlayerCommandEv
                 return True
         target = args[1]
         if "@" in target:
-            player.send_message("§cTarget selectors are invalid for this command")
+            player.send_message(tr("common.target_selector_invalid", "§cTarget selectors are invalid for this command"))
             event.is_cancelled = True
             return True
         
@@ -198,7 +199,7 @@ def handle_command_preprocess(self: "OnistoneEssentials", event: PlayerCommandEv
         target_user = self.db.get_offline_user(target)
         if target_user is not None:
             if target_user.enabled_mt == 0 and not player.has_permission("onistone.exempt.msgtoggle"):
-                player.send_message("§cThis player has private messages disabled")
+                player.send_message(tr("preprocesses.msg_3", "§cThis player has private messages disabled"))
                 event.is_cancelled = True
                 return True
 

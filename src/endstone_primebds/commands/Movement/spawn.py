@@ -3,13 +3,14 @@ from endstone.command import CommandSender
 from endstone_primebds.utils.command_util import create_command
 from time import time
 from typing import TYPE_CHECKING
+from endstone_primebds.utils.locale_util import tr
 
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
 
 command, permission = create_command(
     "spawn",
-    "Warps you to the spawn!",
+    tr("spawn.msg_1", "Warps you to the spawn!"),
     ["/spawn"],
     ["onistone.command.spawn"]
 )

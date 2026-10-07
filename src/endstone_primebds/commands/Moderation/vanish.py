@@ -11,13 +11,14 @@ except Exception:
     PACKET_SUPPORT = False
 
 from typing import TYPE_CHECKING
+from endstone_primebds.utils.locale_util import tr
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
 
 # Register command
 command, permission = create_command(
     "vanish",
-    "Completely hide your server visibility!",
+    tr("vanish.msg_1", "Completely hide your server visibility!"),
     ["/vanish"],
     ["onistone.command.vanish"]
 )
@@ -25,16 +26,16 @@ command, permission = create_command(
 # VANISH COMMAND FUNCTIONALITY
 def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) -> bool:
     if not isinstance(sender, Player):
-        sender.send_message("This command can only be executed by a player")
+        sender.send_message(tr("heal.not_player", "This command can only be executed by a player"))
         return False
 
     if not PACKET_SUPPORT:
-        sender.send_message("§cVanish is disabled due to missing protocol library")
+        sender.send_message(tr("vanish.msg_2", "§cVanish is disabled due to missing protocol library"))
         return False
 
     user = self.db.get_online_user(sender.xuid)
     if user is None:
-        sender.send_message("§6User not found in database")
+        sender.send_message(tr("vanish.msg_3", "§6User not found in database"))
         return False
 
     new_vanish_status = 0 if user.is_vanish else 1

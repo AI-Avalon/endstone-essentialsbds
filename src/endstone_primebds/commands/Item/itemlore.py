@@ -3,13 +3,14 @@ from endstone_primebds.utils.command_util import create_command
 from endstone_primebds.utils.target_selector_util import get_matching_actors
 
 from typing import TYPE_CHECKING
+from endstone_primebds.utils.locale_util import tr
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
 
 # Register command
 command, permission = create_command(
     "itemlore",
-    "Modify item lore data!",
+    tr("itemlore.msg_1", "Modify item lore data!"),
     [
         "/itemlore <player: player> (add)<add_lore: add_lore> <item_lore: string> (slot|helmet|chestplate|leggings|boots|mainhand|offhand)[slotType: slotTypeAddLore] [slot: int]",
         "/itemlore <player: player> (set)<set_lore: set_lore> <replaced_lore: string> (slot|helmet|chestplate|leggings|boots|mainhand|offhand)[slotType: slotTypeSetLore] [slot: int]",
@@ -24,7 +25,7 @@ command, permission = create_command(
 
 def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) -> bool:
     if len(args) < 2:
-        sender.send_message("§cUsage: /itemlore <player> <add|set|delete|clear> [message|line] [slotType] [slot]")
+        sender.send_message(tr("itemlore.msg_2", "§cUsage: /itemlore <player> <add|set|delete|clear> [message|line] [slotType] [slot]"))
         return False
 
     target_selector = args[0]
@@ -38,12 +39,12 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
         try:
             slot_index = int(args[4])
         except ValueError:
-            sender.send_message("§cSlot index must be a number")
+            sender.send_message(tr("iteminfo.msg_2", "§cSlot index must be a number"))
             return False
 
     targets = get_matching_actors(self, target_selector, sender)
     if not targets:
-        sender.send_message("§cNo matching players found")
+        sender.send_message(tr("iteminfo.msg_3", "§cNo matching players found"))
         return False
 
     for target in targets:
@@ -82,7 +83,7 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
 
         if action == "add":
             if not extra:
-                sender.send_message("§cPlease specify a lore line to add")
+                sender.send_message(tr("itemlore.msg_3", "§cPlease specify a lore line to add"))
                 return False
             new_lore = list(current_lore)
             new_lore.append(" ".join(args[2:len(args) if not slot_type else 3]))  # keep full text if before slotType
@@ -90,13 +91,13 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
 
         elif action == "set":
             if not extra:
-                sender.send_message("§cPlease specify lore text to set")
+                sender.send_message(tr("itemlore.msg_4", "§cPlease specify lore text to set"))
                 return False
             meta_data.lore = [" ".join(args[2:len(args) if not slot_type else 3])]
 
         elif action == "delete":
             if not current_lore:
-                sender.send_message("§cNo lore lines to delete")
+                sender.send_message(tr("itemlore.msg_5", "§cNo lore lines to delete"))
                 return False
             if extra and extra.isdigit():
                 line_index = int(extra) - 1
@@ -105,7 +106,7 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
                     new_lore.pop(line_index)
                     meta_data.lore = new_lore
                 else:
-                    sender.send_message("§cInvalid lore line index")
+                    sender.send_message(tr("itemlore.msg_6", "§cInvalid lore line index"))
                     return False
             else:
                 new_lore = list(current_lore)
@@ -116,7 +117,7 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
             meta_data.lore = None
 
         else:
-            sender.send_message("§cInvalid action. Use add, set, delete, or clear")
+            sender.send_message(tr("itemlore.msg_7", "§cInvalid action. Use add, set, delete, or clear"))
             return False
 
         held_item.set_item_meta(meta_data)

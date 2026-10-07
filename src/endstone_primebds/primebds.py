@@ -45,6 +45,7 @@ from endstone_primebds.handlers.packets import handle_packetsend_event, handle_p
 from endstone_primebds.handlers.actions import handle_gamemode_event, handle_interact_event, handle_teleport_event, handle_death_event
 from endstone_primebds.handlers.items import handle_item_pickup_event, handle_item_use, handle_item_drop_event
 from endstone_primebds.handlers.gamerules import handle_bed_enter_event, handle_emote_event, handle_leaves_decay_event, handle_skin_change_event
+from endstone_primebds.utils.locale_util import tr
 
 class OnistoneEssentials(Plugin):
     api_version = "0.11"
@@ -395,7 +396,7 @@ class OnistoneEssentials(Plugin):
         try:
             if command.name in self.handlers:
                 if any(arg.find("@e") != -1 or arg.find("@n") != -1 for arg in args):
-                    sender.send_message("§cSelector must be player-type")
+                    sender.send_message(tr("primebds.msg_1", "§cSelector must be player-type"))
                     return False
                 else:
                     handler_func = self.handlers[command.name]

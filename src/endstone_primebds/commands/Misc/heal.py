@@ -4,13 +4,14 @@ from endstone_primebds.utils.command_util import create_command
 from endstone_primebds.utils.target_selector_util import get_matching_actors
 
 from typing import TYPE_CHECKING
+from endstone_primebds.utils.locale_util import tr
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
 
 # Register command
 command, permission = create_command(
     "heal",
-    "Sets player health to full!",
+    tr("heal.msg_1", "Sets player health to full!"),
     ["/heal [player: player]"],
     ["onistone.command.heal", "onistone.command.heal.other"]
 )

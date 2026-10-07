@@ -2,6 +2,7 @@ from endstone.command import CommandSender
 from endstone_primebds.utils.command_util import create_command
 
 from typing import TYPE_CHECKING
+from endstone_primebds.utils.locale_util import tr
 
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
@@ -9,7 +10,7 @@ if TYPE_CHECKING:
 # Register command
 command, permission = create_command(
     "reloadscripts",
-    "Reloads the server scripts!",
+    tr("reloadscripts.msg_1", "Reloads the server scripts!"),
     ["/reloadscripts"],
     ["onistone.command.reloadscripts"],
     "op",

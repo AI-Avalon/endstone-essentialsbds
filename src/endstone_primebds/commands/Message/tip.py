@@ -4,6 +4,7 @@ from endstone_primebds.utils.command_util import create_command
 from endstone_primebds.utils.target_selector_util import get_matching_actors
 
 from typing import TYPE_CHECKING
+from endstone_primebds.utils.locale_util import tr
 
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
@@ -11,7 +12,7 @@ if TYPE_CHECKING:
 # Register command
 command, permission = create_command(
     "tip",
-    "Sends a custom tip message!",
+    tr("tip.msg_1", "Sends a custom tip message!"),
     ["/tip <player: player> <text: message>"],
     ["onistone.command.tip"]
 )
@@ -19,7 +20,7 @@ command, permission = create_command(
 # TIP COMMAND FUNCTIONALITY
 def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) -> bool:
     if len(args) < 2:
-        sender.send_message("§cUsage: /tip <player> <text>")
+        sender.send_message(tr("tip.msg_2", "§cUsage: /tip <player> <text>"))
         return False
 
     targets = get_matching_actors(self, args[0], sender)
@@ -28,7 +29,7 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
         return False
 
     if len(args[1]) < 1:
-        sender.send_message("§cTip message cannot be empty")
+        sender.send_message(tr("tip.msg_3", "§cTip message cannot be empty"))
         return False
 
     for player in targets:

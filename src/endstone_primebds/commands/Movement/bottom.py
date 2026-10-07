@@ -3,6 +3,7 @@ from endstone.command import CommandSender
 from endstone_primebds.utils.command_util import create_command
 
 from typing import TYPE_CHECKING
+from endstone_primebds.utils.locale_util import tr
 
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
@@ -13,7 +14,7 @@ terrain_cache = {}  # {(x, z): lowest_air_y}
 # Register command
 command, permission = create_command(
     "bottom",
-    "Warps you to the nearest air pocket below you!",
+    tr("bottom.msg_1", "Warps you to the nearest air pocket below you!"),
     ["/bottom"],
     ["onistone.command.bottom"]
 )

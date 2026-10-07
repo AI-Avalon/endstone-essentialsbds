@@ -3,13 +3,14 @@ from endstone_primebds.utils.command_util import create_command
 from endstone_primebds.utils.target_selector_util import get_matching_actors
 
 from typing import TYPE_CHECKING
+from endstone_primebds.utils.locale_util import tr
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
 
 # Register command
 command, permission = create_command(
     "itemtag",
-    "Modify item tags!",
+    tr("itemtag.msg_1", "Modify item tags!"),
     [
         "/itemtag <player: player> (unbreakable)<itemTag: itemTag> <is: bool> (slot|helmet|chestplate|leggings|boots|mainhand|offhand)[slotTypeTag: slotTypeTag] [slot: int]"
     ],
@@ -25,7 +26,7 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
     elif tag_value_str in ("false", "0", "no", "off"):
         tag_value = False
     else:
-        sender.send_message("§cInvalid tag value")
+        sender.send_message(tr("itemtag.msg_2", "§cInvalid tag value"))
         return False
 
     slot_type = None
@@ -36,7 +37,7 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
         try:
             slot_index = int(args[4])
         except ValueError:
-            sender.send_message("§cSlot index must be a number")
+            sender.send_message(tr("iteminfo.msg_2", "§cSlot index must be a number"))
             return False
 
     targets = get_matching_actors(self, target_selector, sender)

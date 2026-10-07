@@ -8,6 +8,7 @@ from endstone_primebds.utils.command_util import create_command
 from endstone_primebds.utils.logging_util import log
 
 from typing import TYPE_CHECKING
+from endstone_primebds.utils.locale_util import tr
 
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
@@ -15,7 +16,7 @@ if TYPE_CHECKING:
 # Register command
 command, permission = create_command(
     "unwarn",
-    "Remove a warning or clear all warnings from a player!",
+    tr("unwarn.msg_1", "Remove a warning or clear all warnings from a player!"),
     ["/unwarn <player: player> (clear)<warn_action: warn_action>",
      "/unwarn <player: player> [id: int]"],
     ["onistone.command.unwarn"]
@@ -23,13 +24,13 @@ command, permission = create_command(
 
 def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) -> bool:
     if BlockCommandSender is not None and isinstance(sender, BlockCommandSender):
-       sender.send_message("§cThis command cannot be automated")
+       sender.send_message(tr("clearchat.msg_2", "§cThis command cannot be automated"))
        return False
 
 
 
     if len(args) < 1:
-        sender.send_message("§cUsage: /unwarn <player> (clear) | /unwarn <player> <id>")
+        sender.send_message(tr("unwarn.msg_2", "§cUsage: /unwarn <player> (clear) | /unwarn <player> <id>"))
         return False
 
     target_name = args[0]
@@ -98,7 +99,7 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
     try:
         warn_id = int(action)
     except ValueError:
-        sender.send_message("§cInvalid warning ID. Please specify a valid number or 'clear'")
+        sender.send_message(tr("unwarn.msg_3", "§cInvalid warning ID. Please specify a valid number or 'clear"))
         return False
 
     success = self.db.expire_warning_by_id(warn_id)

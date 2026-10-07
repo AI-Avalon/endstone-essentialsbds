@@ -4,19 +4,20 @@ from endstone.command import CommandSender
 from endstone_primebds.utils.command_util import create_command
 
 from typing import TYPE_CHECKING
+from endstone_primebds.utils.locale_util import tr
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
 
 command, permission = create_command(
     "blockinfo",
-    "Prints info of the facing block!",
+    tr("blockinfo.msg_1", "Prints info of the facing block!"),
     ["/blockinfo [location: pos]"],
     ["onistone.command.blockinfo"]
 )
 
 def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) -> bool:
     if not isinstance(sender, Player):
-        sender.send_message("§cOnly players can use this command.")
+        sender.send_message(tr("blockinfo.msg_2", "§cOnly players can use this command."))
         return True
 
     player = sender
@@ -95,6 +96,6 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
 §7- §eRuntime ID: §f{hit_block.data.runtime_id}
 """)
     else:
-        sender.send_message("§cNo block in sight")
+        sender.send_message(tr("blockinfo.msg_3", "§cNo block in sight"))
 
     return True

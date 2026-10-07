@@ -13,6 +13,7 @@ from endstone_primebds.utils.mod_util import format_time_remaining, safe_duratio
 from datetime import timedelta, datetime
 
 from typing import TYPE_CHECKING
+from endstone_primebds.utils.locale_util import tr
 
 # Use native exports even when the Python facade packages are unavailable.
 ItemStack = inventory.ItemStack
@@ -23,7 +24,7 @@ if TYPE_CHECKING:
 # Register command
 command, permission = create_command(
     "jail",
-    "Jails a player to a specified area!",
+    tr("jail.msg_1", "Jails a player to a specified area!"),
     [
         "/jail <player: player> <jail: string> <duration_number: int> (second|minute|hour|day|week|month|year)<duration_length: jail_length> [reason: message]",
         "/jail <player: player> <jail: string> (forever)<perm_jail: perm_jail> [reason: message]"
@@ -34,7 +35,7 @@ command, permission = create_command(
 # JAIL COMMAND FUNCTIONALITY
 def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) -> bool:
     if BlockCommandSender is not None and isinstance(sender, BlockCommandSender):
-       sender.send_message("§cThis command cannot be automated")
+       sender.send_message(tr("clearchat.msg_2", "§cThis command cannot be automated"))
        return False
 
 

@@ -9,6 +9,7 @@ if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
 
 import threading
+from endstone_primebds.utils.locale_util import tr
 
 # Use native exports even when the Python facade packages are unavailable.
 Location = level.Location
@@ -186,7 +187,7 @@ def check_jailed(self: "OnistoneEssentials"):
                     self.server.command_sender,
                     f'effect "{player.name}" clear saturation'
                 )
-                player.send_message("§6You were freed from jail, time expired!")
+                player.send_message(tr("intervals.msg_1", "§6You were freed from jail, time expired!"))
                 self.jail_cache[player.xuid] = {"is_jailed": False, "is_expired": False, "data": None}
 
 

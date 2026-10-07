@@ -7,6 +7,7 @@ from endstone_primebds.utils.command_util import create_command
 from endstone_primebds.utils.time_util import TimezoneUtils
 
 from typing import TYPE_CHECKING
+from endstone_primebds.utils.locale_util import tr
 
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
@@ -14,7 +15,7 @@ if TYPE_CHECKING:
 # Register command
 command, permission = create_command(
     "note",
-    "Manage mod notes on players!",
+    tr("note.msg_1", "Manage mod notes on players!"),
     ["/note <player: player> (clear)<note_clear: note_clear>",
      "/note <player: player> [page: int]",
      "/note <player: player> (remove)<note_remove: note_remove> <id: int>",
@@ -24,13 +25,13 @@ command, permission = create_command(
 
 def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) -> bool:
     if BlockCommandSender is not None and isinstance(sender, BlockCommandSender):
-       sender.send_message("§cThis command cannot be automated")
+       sender.send_message(tr("clearchat.msg_2", "§cThis command cannot be automated"))
        return False
 
 
 
     if not args:
-        sender.send_message("§cUsage: /note <player> (check|clear|remove|add) <...>")
+        sender.send_message(tr("note.msg_2", "§cUsage: /note <player> (check|clear|remove|add) <...>"))
         return False
 
     player = args[0]
@@ -43,7 +44,7 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
     name = player if not xuid else None 
 
     if not xuid and not name:
-        sender.send_message("§cPlayer not found")
+        sender.send_message(tr("note.msg_3", "§cPlayer not found"))
         return False
     
     if isinstance(subcommand, int):
@@ -78,35 +79,35 @@ def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) 
         if not xuid:
             xuid = self.db.get_xuid_by_name(name)
         if not xuid:
-            sender.send_message("§cPlayer not found")
+            sender.send_message(tr("note.msg_3", "§cPlayer not found"))
             return False
         self.db.clear_notes(xuid)
         sender.send_message(f"§6Cleared all notes for §e{player}")
 
     elif subcommand == "remove":
         if len(args) < 3:
-            sender.send_message("§cUsage: /note <player> remove <note_id>")
+            sender.send_message(tr("note.msg_4", "§cUsage: /note <player> remove <note_id>"))
             return False
         try:
             note_id = int(args[2])
             if self.db.remove_note_by_id(note_id):
                 sender.send_message(f"§6Removed note §eID {note_id}")
             else:
-                sender.send_message("§cNote ID not found")
+                sender.send_message(tr("note.msg_5", "§cNote ID not found"))
         except ValueError:
-            sender.send_message("§cInvalid note ID")
+            sender.send_message(tr("note.msg_6", "§cInvalid note ID"))
 
     elif subcommand == "add":
         message_start = 2 if subcommand == "add" else 1
         if len(args) <= message_start:
-            sender.send_message("§cPlease provide a message to add")
+            sender.send_message(tr("note.msg_7", "§cPlease provide a message to add"))
             return False
         note_message = " ".join(args[message_start:])
         self.db.add_note(note_message, sender.name, xuid=xuid, name=name)
         sender.send_message(f"§6Note added for §e{player}")
 
     else:
-        sender.send_message("§cUnknown subcommand")
+        sender.send_message(tr("note.msg_8", "§cUnknown subcommand"))
         return False
 
     return True

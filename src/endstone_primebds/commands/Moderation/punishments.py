@@ -10,6 +10,8 @@ from endstone_primebds.utils.command_util import create_command
 from typing import TYPE_CHECKING
 
 from endstone_primebds.utils.form_wrapper_util import ActionFormResponse, ActionFormData
+from endstone_primebds.utils.locale_util import tr
+from endstone_primebds.utils.locale_util import tr
 
 if TYPE_CHECKING:
     from endstone_primebds.primebds import OnistoneEssentials
@@ -17,7 +19,7 @@ if TYPE_CHECKING:
 # Register command
 command, permission = create_command(
     "punishments",
-    "Manage punishment history of a specified player!",
+    tr("punishments.msg_1", "Manage punishment history of a specified player!"),
     ["/punishments <player: player> [page: int]",
      "/punishments <player: player> (remove|clear) <punishment_removal: remove_punishment_log>"],
     ["onistone.command.punishments"]
@@ -26,7 +28,7 @@ command, permission = create_command(
 # PUNISHMENTS CMD FUNCTIONALITY
 def handler(self: "OnistoneEssentials", sender: CommandSender, args: list[str]) -> bool:
     if BlockCommandSender is not None and isinstance(sender, BlockCommandSender):
-       sender.send_message("§cThis command cannot be automated")
+       sender.send_message(tr("clearchat.msg_2", "§cThis command cannot be automated"))
        return False
 
 
@@ -94,8 +96,8 @@ def remove_punishment_by_id(self: "OnistoneEssentials", sender: CommandSender, t
 
     # Create action form with punishments listed as buttons
     form = ActionFormData()
-    form.title("Punishment Removal")
-    form.button("Cancel")
+    form.title(tr("punishments.msg_2", "Punishment Removal"))
+    form.button(tr("punishments.msg_3", "Cancel"))
 
     for punishment in punish_log:
         punishment_text = (
